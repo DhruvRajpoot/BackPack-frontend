@@ -50,10 +50,11 @@ export const AuthProvider = ({ children }) => {
         }
         catch (err) {
             setLoading(false)
-            if ((err.response ? err.response.username[0] : '') === 'A user with that username already exists.') {
+            console.log(err)
+            if ((err.response.data.username ? err.response.data.username[0] : '') === 'A user with that username already exists.') {
                 return 'userexist'
             }
-            else if ((err.response ? err.response.password[0] : '') === 'This password is too common.') {
+            else if ((err.response.data.password ? err.response.data.password[0] : '') === 'This password is too common.') {
                 return 'passCommon'
             }
             return err.message

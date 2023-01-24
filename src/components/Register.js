@@ -96,8 +96,8 @@ export default function Register() {
                                 <div className="mb-4 px-2 py-2 shadow-sm">
                                     <div className="d-flex align-items-center">
                                         <label htmlFor="college" className='me-4'>College&nbsp;*</label>
-                                        <select name="college" id="college" style={{ border: "none", width: "100%", ...inputStyle, padding: '5px' }} onChange={handleOnChange} required >
-                                            <option value="choose" disabled selected="selected" className='text-center'>
+                                        <select name="college" id="college" style={{ border: "none", width: "100%", ...inputStyle, padding: '5px' }} onChange={handleOnChange} required defaultValue='default'>
+                                            <option value="default" disabled className='text-center'>
                                                 -- Select college --
                                             </option>
                                             {collegenames.map((ele, index) => {
@@ -120,7 +120,7 @@ export default function Register() {
                                     <span>Profile : * </span><label><span className='fileInpStyleBtn ms-1'><i className="fa-solid fa-upload me-1"></i>Upload Profile</span><input type="file" name="profile_pic" className='fileInpBtn ms-2' onChange={(e) => { formData.append('profile_pic', e.target.files[0]) }} required /></label>
                                 </div>
                                 <div className="mb-4 form-check">
-                                    <input type="checkbox" className="form-check-input shadow-none" style={{ cursor: "pointer",...inputStyle }} required />
+                                    <input type="checkbox" className="form-check-input shadow-none" style={{ cursor: "pointer"}} required />
                                     <label className="form-check-label" htmlFor="exampleCheck1">I agree to Terms & Conditions.</label>
                                 </div>
                                 <button type="submit" className="btn shadow-sm btnBg" disabled={credential.password !== credential.password2} style={{ borderRadius: "20px", padding: "calc(.3rem + .2vw) calc(1.5rem + .5vw)", cursor: 'pointer' }}>Register</button>
