@@ -29,15 +29,11 @@ export const AuthProvider = ({ children }) => {
             return 200
         }
         catch (err) {
-            if (err.response.status === 401) {
-                setLoading(false)
+            setLoading(false)
+            if (err.response ? err.response.status : '' === 401) {
                 return 401
             }
-            else {
-                setLoading(false)
-                alert("Something went wrong!");
-                return err.response.status
-            }
+            return err.message
         }
     };
 
@@ -54,15 +50,13 @@ export const AuthProvider = ({ children }) => {
         }
         catch (err) {
             setLoading(false)
-            let errMsg=err.response.data
-            if((errMsg.username?errMsg.username[0]:'')==='A user with that username already exists.'){
+            if ((err.response ? err.response.username[0] : '') === 'A user with that username already exists.') {
                 return 'userexist'
             }
-            else if((errMsg.password?errMsg.password[0]:'')==='This password is too common.'){
+            else if ((err.response ? err.response.password[0] : '') === 'This password is too common.') {
                 return 'passCommon'
             }
-            alert("Something went wrong!");
-            return 'something went wrong!'
+            return err.message
         }
     };
 

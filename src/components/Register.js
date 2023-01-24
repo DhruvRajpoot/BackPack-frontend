@@ -8,6 +8,7 @@ import '../App.css'
 import ThemeContext from '../context/ThemeContext'
 import Loading from './Loading'
 import collegenames from '../colleges/collegenames'
+import Alert from './Alert'
 
 export default function Register() {
     const { registerUser, loading, user } = useContext(AuthContext);
@@ -42,8 +43,10 @@ export default function Register() {
             formData.append(ele, credential[ele])
         }
         const responseMsg = await registerUser(formData);
-        if (responseMsg === 'userexist') { setErrorMsg('A user with that username already exists.') }
-        else if (responseMsg === 'passCommon') { setErrorMsg('The password is too common. ') }
+        if (responseMsg === 'userexist') { setErrorMsg('A user with that username already exists.');return }
+        else if (responseMsg === 'passCommon') { setErrorMsg('The password is too common. ');return }
+        setErrorMsg(responseMsg);
+        return;
     }
 
     return (
@@ -52,9 +55,7 @@ export default function Register() {
             {!loading &&
                 <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
                     <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + .5vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
-                        <div className={`alert alert-danger d-${errorMsg!=='' ? 'block' : 'none'}`} role="alert">
-                            <strong>Register Failed ! </strong>&nbsp; {errorMsg}
-                        </div>
+                        {errorMsg!=='' && <Alert strong={'Register Failed!'} message={errorMsg}/> }
                         <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
                             <h3 className='pb-4 fst-italic' style={{ fontSize: 'calc(1.3rem + .4vw)' }}>Ready to start your journey with us <span className="fst-normal">&#x1F60A;</span>   </h3>
                             <form onSubmit={handleSubmit}>

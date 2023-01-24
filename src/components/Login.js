@@ -8,6 +8,7 @@ import AuthContext from "../context/AuthContext";
 import ThemeContext from '../context/ThemeContext'
 import '../App.css'
 import Loading from './Loading'
+import Alert from './Alert'
 
 export default function Login() {
     const navigate = useNavigate()
@@ -20,6 +21,7 @@ export default function Login() {
 
     const [ishide, setIsHide] = useState(true)
     const [showError, setShowError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [credential, setCredential] = useState({})
 
@@ -39,12 +41,16 @@ export default function Login() {
             return false
         }
         const responsestatus = await loginUser(credential);
-        if (responsestatus === 401) {
-            setShowError(true)
+        if (responsestatus === 200) {
+            setErrorMsg('')
+            return
         }
-        else if (responsestatus === 200) {
-            setShowError(false)
+        else if (responsestatus === 401) {
+            setErrorMsg('Please try to login with correct credentials')
+            return
         }
+        setErrorMsg(responsestatus)
+        return
     }
 
     useEffect(() => {
@@ -57,11 +63,9 @@ export default function Login() {
             {!loading &&
                 <div className="container-fluid d-flex justify-content-center align-items-center p-4" style={{ minHeight: 'calc(30rem + 10vw)' }}>
                     <div className="container row w-80 justify-content-center align-items-center rounded" style={{ ...myStyle, boxShadow: '0 0 20px grey', padding: 'calc(1.5rem + 1vw) calc(.5rem + 2.5vw) calc(1rem) calc(.5rem + 2.5vw)' }}>
-                        <div className={`alert alert-danger d-${showError ? 'block' : 'none'}`} role="alert">
-                            <strong>Login Failed ! </strong>&nbsp; Please try to login with correct credentials
-                        </div>
+                        {errorMsg !== '' && <Alert strong={'Login Failed!'} message={errorMsg}/>}
                         <div className={`col-${window.screen.width > 900 ? 6 : 12}`}>
-                            <h3 className=' pb-4 fst-italic' style={{ fontSize: 'calc(1.3rem + .4vw)' }}>Happy to see you again <span className='fst-normal'>&#x1F60A;</span></h3>
+                            <h3 className=' pb-4 fst-italic' style={{ fontSize:'calc(1.3rem + .4vw)' }}>Happy to see you again <span className='fst-normal'>&#x1F60A;</span></h3>
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-4 form-floating">
                                     <input type="text" name='username' className="form-control border-0 shadow-sm" required onChange={handleOnChange} placeholder='Username' style={{ ...inputStyle }} />
