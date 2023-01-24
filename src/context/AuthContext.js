@@ -50,7 +50,6 @@ export const AuthProvider = ({ children }) => {
         }
         catch (err) {
             setLoading(false)
-            console.log(err)
             if ((err.response.data.username ? err.response.data.username[0] : '') === 'A user with that username already exists.') {
                 return 'userexist'
             }
