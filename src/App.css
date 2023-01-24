@@ -119,3 +119,17 @@ nav li a.dropdown-item:active{
     border: none;
     border-radius: 10px;
 }
+
+/* // contactus thankyoudiv */
+#thankyouDiv{
+    animation: scale .5s ease-out 1;
+}
+
+@keyframes scale {
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+}

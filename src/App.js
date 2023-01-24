@@ -33,7 +33,6 @@ function App() {
     else { setMyStyle({ background: 'rgb(5 182 195)' }) }
   }, [appTheme])
 
-  
   return (
     <>
       <BrowserRouter>
