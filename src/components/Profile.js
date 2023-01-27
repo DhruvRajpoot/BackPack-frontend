@@ -45,26 +45,26 @@ const Profile = () => {
   }
 
   const [pendingRequestsToMe, setPendingRequestsToMe] = useState(0)
-  const pendingRequestsToMeCounter=()=>{
+  const pendingRequestsToMeCounter = () => {
     let counter = 0;
     ((profileData.request_to_me) ? profileData.request_to_me : []).map((ele, index) => {
       if (ele.status === 'pending') { counter++ }
     })
     setPendingRequestsToMe(counter)
   }
-  
+
   useEffect(() => {
     pendingRequestsToMeCounter()
   }, [profileData])
 
-  const handleAvailability=async(id)=>{
-    const formData=new FormData()
-    formData.append('product',id)
-    let url=baseurl+'api/products/'
-    await api.put(url,formData)
+  const handleAvailability = async (id) => {
+    const formData = new FormData()
+    formData.append('product', id)
+    let url = baseurl + 'api/products/'
+    await api.put(url, formData)
     profile()
   }
-  
+
   //Modals function
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -103,11 +103,11 @@ const Profile = () => {
       {(!loading && Object.keys(profileData).length !== 0) &&
         <div style={{ ...myStyle, padding: '2rem 2rem', marginTop: '-1rem' }}>
           <div className="row w-100">
-            <div className={`col-md-4 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`} style={{...inputMyStyle,borderRadius:"10px"}}>
-              <div style={{ minWidth: "calc(10rem + 10vw)",paddingTop:"1rem" }}>
+            <div className={`col-md-4 ${window.screen.width > 992 ? 'd-flex justify-content-center' : ''}`} style={{ ...inputMyStyle, borderRadius: "10px" }}>
+              <div style={{ minWidth: "calc(10rem + 10vw)", paddingTop: "1rem" }}>
                 <img src={profileData.user ? profileData.user.profile_pic : ''} alt="" width={120} height={110} style={{ borderRadius: "10px", background: 'rgb(200 200 200)' }} />
                 <h4 className="mt-4">
-                  {profileData.user ?capitalize(profileData.user.first_name) : ''}  {profileData.user ?capitalize(profileData.user.last_name) : ''}
+                  {profileData.user ? capitalize(profileData.user.first_name) : ''}  {profileData.user ? capitalize(profileData.user.last_name) : ''}
                 </h4>
                 <h6 className="mt-2">@{profileData.user ? profileData.user.username : ''}</h6>
                 <h6 className="mt-2 mb-3">{profileData.user ? profileData.user.email : ''}</h6>
@@ -127,28 +127,30 @@ const Profile = () => {
             </div>
             <div className="col-md-8">
               <div>
-                <button className="btn shadow-none" onClick={handleShow} style={{ position: "fixed", bottom: 'calc(3rem + 1vw)', right: 'calc(1rem + 1vw)', backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {pendingRequestsToMe!==0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                <button className="btn shadow-none" onClick={handleShow} style={{ position: "fixed", bottom: 'calc(3rem + 1vw)', right: 'calc(1rem + 1vw)', backgroundColor: "orange", fontWeight: '500', color: '#404040' }} >New Requests {pendingRequestsToMe !== 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                   {pendingRequestsToMe}
                 </span>}</button>
 
                 <div>
-                  <div className="row p-3 mx-1" style={{ marginTop:'calc(2rem - 2vw)',...inputMyStyle ,borderRadius:"10px"}}>
-                  <h2>Your Books</h2>
-                    {profileData.product.length === 0 && <p className="fs-5 fst-italic">No books show</p>}
-                    {profileData.product.map((ele, index) => {
-                      return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
-                        <div style={{ borderRadius: "10px", boxShadow: `0 0 7px 0px` }}>
-                          <img src={ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "10px", borderTopRightRadius: '10px' }} />
-                          <h5 className="text-center py-1">{capitalize(ele.name)}</h5>
-                          {/* <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (capitalize(ele.owner.first_name) + ' ' + capitalize(ele.owner.last_name))}</h6> */}
-                          <h6 className="text-center mt-2">
-                            <span>Set Availability : </span>
-                            <button disabled={ele.available===true?true:false} style={{border:`${ele.available===true?`2px solid ${theme==='light'?'#181818':'white'}`:'none'}`,background:"green",borderRadius:"50%",padding:'0px 7px',margin:'0 .3rem'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
-                            <button disabled={ele.available===false?true:false} style={{border:`${ele.available===false?`2px solid ${theme==='light'?'#181818':'white'}`:'none'}`,background:"red",borderRadius:"50%",padding:'0px 7px'}} onClick={()=>{handleAvailability(ele.id)}}>&nbsp;</button>
+                  <div className="p-3 mx-1" style={{ marginTop: 'calc(2rem - 2vw)', ...inputMyStyle, borderRadius: "10px" }}>
+                    <h2>Your Books</h2>
+                    <div className="row">
+                      {profileData.product.length === 0 && <p className="fs-5 fst-italic">No books show</p>}
+                      {profileData.product.map((ele, index) => {
+                        return <div className="col-md-3 my-3 d-flex justify-content-center" key={index}>
+                          <div style={{ borderRadius: "10px", boxShadow: `0 0 7px 0px` }}>
+                            <img src={ele.photo1} alt="" style={{ width: 'calc(15rem - 3vw)', height: 'calc(13rem - 3vw)', borderTopLeftRadius: "10px", borderTopRightRadius: '10px' }} />
+                            <h5 className="text-center py-1">{capitalize(ele.name)}</h5>
+                            {/* <h6 className="text-center">Owner : {(ele.owner.id === ele.current_owner.id) ? 'You' : (capitalize(ele.owner.first_name) + ' ' + capitalize(ele.owner.last_name))}</h6> */}
+                            <h6 className="text-center mt-2">
+                              <span>Set Availability : </span>
+                              <button disabled={ele.available === true ? true : false} style={{ border: `${ele.available === true ? `2px solid ${theme === 'light' ? '#181818' : 'white'}` : 'none'}`, background: "green", borderRadius: "50%", padding: '0px 7px', margin: '0 .3rem' }} onClick={() => { handleAvailability(ele.id) }}>&nbsp;</button>
+                              <button disabled={ele.available === false ? true : false} style={{ border: `${ele.available === false ? `2px solid ${theme === 'light' ? '#181818' : 'white'}` : 'none'}`, background: "red", borderRadius: "50%", padding: '0px 7px' }} onClick={() => { handleAvailability(ele.id) }}>&nbsp;</button>
                             </h6>
+                          </div>
                         </div>
-                      </div>
-                    })}
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>

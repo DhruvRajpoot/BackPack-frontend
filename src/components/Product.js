@@ -61,7 +61,6 @@ export default function Product() {
                     </Modal.Footer>
                 </form>
             </Modal>
-            {/* onKeyUp={(e) => { if (e.key === 'Enter') { handleSearch() } }} */}
             {loading && <Loading />}
             {!loading &&
                 <div style={{ ...myStyle, margin: 'calc(1rem + 2vw) calc(.1rem + 2vw) -1rem calc(.1rem + 2vw)', boxShadow: '0 0 15px grey', borderRadius: "5px" }}>

@@ -9,7 +9,7 @@ import Loading from './Loading'
 export default function Transaction() {
   const { checkUser } = useContext(AuthContext)
   //eslint-disable-next-line
-  useEffect(() => { checkUser() })
+  useEffect(() => { checkUser() },[])
   const { myStyle, theme } = useContext(ThemeContext)
   const { loading } = useContext(AuthContext)
   const { profileData } = useContext(ProductContext)
