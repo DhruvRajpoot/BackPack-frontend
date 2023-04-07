@@ -25,13 +25,13 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem("authTokens", JSON.stringify(response.data));
                 history("/");
             }
-            setLoading(false)
-            return 200
+            setLoading(false);
+            return 200;
         }
         catch (err) {
             setLoading(false)
             if (err.response ? err.response.status : '' === 401) {
-                return 401
+                return 401;
             }
             return err.message
         }
@@ -43,10 +43,14 @@ export const AuthProvider = ({ children }) => {
             let url = baseurl + 'auth/register/'
             const response = await axios.post(url, credential)
             if (response.status === 201) {
-                history("/login");
+                history('/login');
+                // setAuthTokens(response.data);
+                // setUser(jwt_decode(response.data.access));
+                // localStorage.setItem("authTokens", JSON.stringify(response.data));
+                // history("/");
             }
-            setLoading(false)
-            return 'registered'
+            setLoading(false);
+            return 'registered';
         }
         catch (err) {
             setLoading(false)

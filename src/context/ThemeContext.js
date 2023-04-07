@@ -3,15 +3,20 @@ const ThemeContext=createContext()
 export default ThemeContext;
 
 export const ThemeProvider=({children})=>{
-    const [theme,setTheme]=useState('light')
+    
+    const [theme,setTheme]=useState(localStorage.getItem('theme')?localStorage.getItem('theme'):'light')
     const toggleTheme=()=>{
-        if(theme==='light'){setTheme('dark')}
-        else setTheme('light')
+        if(theme==='light'){
+            setTheme('dark');
+            localStorage.setItem('theme','dark');
+        }
+        else {
+            setTheme('light');
+            localStorage.setItem('theme','light');
+        }
     }
-    const [myStyle, setMyStyle] = useState({
-        background: 'white',
-        color: '#181818',
-    })
+
+    const [myStyle, setMyStyle] = useState({})
 
     const [inputStyle,setInputStyle]=useState({})
 
