@@ -27,6 +27,6 @@ const collegenames = [
     "Uttar Pradesh Technical University(UPTU), Lucknow",
     "Banaras Hindu University(BHU), Varanasi",
     "Institute of Engineering and Technology(IET), Lucknow",
-]
+].sort();
 
 export default collegenames;
